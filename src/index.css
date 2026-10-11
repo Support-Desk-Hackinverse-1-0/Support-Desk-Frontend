@@ -1,0 +1,195 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+/* ============================================================
+   SUPPORT DESK — DESIGN SYSTEM TOKENS
+   Primary: Whites/Off-whites | Accent: Near-blacks
+   ============================================================ */
+
+@layer base {
+  :root {
+    /* --- Color Palette (Nocturnal Atelier Obsidian) --- */
+    --color-bg-base: #000000;          /* Deep obsidian base */
+    --color-bg-surface: #09090b;       /* Dark card / panel background */
+    --color-bg-subtle: #161619;        /* Hover and list headers */
+    --color-bg-dark: #050507;          /* Sidebar background */
+    --color-bg-dark-surface: #0a0a0c;  /* Inner containers */
+    --color-bg-dark-hover: #1c1c20;    /* Dark hover states */
+
+    --color-primary: #ffffff;          /* White primary actions/text */
+    --color-primary-hover: #e4e4e7;    /* Zinc hover state */
+    --color-primary-fg: #000000;       /* Dark text on white buttons */
+
+    --color-secondary: rgba(255, 255, 255, 0.08); /* Minimalistic borders */
+    --color-secondary-hover: rgba(255, 255, 255, 0.15);
+
+    --color-text-primary: #ffffff;     /* White main text */
+    --color-text-secondary: #a1a1aa;   /* Zinc-400 muted text */
+    --color-text-tertiary: #71717a;    /* Zinc-500 placeholder / meta text */
+    --color-text-on-dark: #ffffff;
+    --color-text-on-dark-muted: #a1a1aa;
+
+    --color-accent-green: #10b981;     /* Success / online */
+    --color-accent-red: #ef4444;       /* Error / danger */
+    --color-accent-yellow: #f59e0b;    /* Warning / pending */
+    --color-accent-blue: #3b82f6;      /* Info / assigned */
+    --color-accent-purple: #a78bfa;    /* AI Context brand */
+
+    /* --- Status badge backgrounds (translucent premium) --- */
+    --color-badge-open-bg: rgba(245, 158, 11, 0.1);
+    --color-badge-open-text: #f59e0b;
+    --color-badge-assigned-bg: rgba(59, 130, 246, 0.1);
+    --color-badge-assigned-text: #60a5fa;
+    --color-badge-resolved-bg: rgba(16, 185, 129, 0.1);
+    --color-badge-resolved-text: #34d399;
+
+    /* --- Layout --- */
+    --sidebar-width: 256px;
+    --topbar-height: 64px;
+
+    /* --- Elevation / Shadow (Fine and subtle for dark mode) --- */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.7);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.8);
+    --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.95);
+
+    /* --- Border Radius --- */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+
+    /* --- Transition --- */
+    --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-base: 220ms cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-slow: 320ms cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* --- Font --- */
+    --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg-base);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-secondary);
+    border-radius: var(--radius-full);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-secondary-hover);
+  }
+
+  /* Focus ring */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ============================================================
+   UTILITY CLASSES — Design token bridge for Tailwind
+   ============================================================ */
+
+@layer utilities {
+  /* Page-level fade-in */
+  .animate-fade-in {
+    animation: fadeIn var(--transition-slow) ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Slide-in from left (sidebar) */
+  .animate-slide-in {
+    animation: slideIn var(--transition-base) ease forwards;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-12px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Pulse loading skeleton */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--color-bg-subtle) 25%,
+      var(--color-secondary) 50%,
+      var(--color-bg-subtle) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-md);
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Glass effect (for overlays / modals) */
+  .glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .glass-dark {
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+/* ============================================================
+   TAILWIND V4 THEME — CSS variable bridge
+   ============================================================ */
+
+@theme {
+  --color-surface: var(--color-bg-surface);
+  --color-base: var(--color-bg-base);
+  --color-dark: var(--color-bg-dark);
+  --font-family-sans: var(--font-sans);
+}
